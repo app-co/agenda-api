@@ -1,0 +1,39 @@
+{
+  "name": "intc-com",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "tsx watch src/server.ts",
+    "build": "tsup src --out-dir build",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/node": "20.1.0",
+    "@typescript-eslint/eslint-plugin": "^4.22.1",
+    "@typescript-eslint/parser": "^4.22.1",
+    "babel-plugin-module-resolver": "^4.1.0",
+    "babel-plugin-transform-typescript-metadata": "^0.3.2",
+    "eslint": "^7.25.0",
+    "eslint-config-airbnb-base": "^14.2.1",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-import-resolver-typescript": "^2.4.0",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-import-helpers": "^1.1.0",
+    "eslint-plugin-prettier": "^3.4.0",
+    "prettier": "^2.2.1",
+    "prisma": "4.13.0",
+    "tsup": "6.7.0",
+    "tsx": "3.12.7",
+    "typescript": "5.0.4"
+  },
+  "dependencies": {
+    "@prisma/client": "4.13.0",
+    "dotenv": "16.0.3",
+    "fastify": "4.17.0",
+    "zod": "3.21.4"
+  }
+}

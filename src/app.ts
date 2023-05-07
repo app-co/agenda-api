@@ -2,8 +2,7 @@ import fastify from 'fastify';
 import { ZodError, z } from 'zod';
 
 import { env } from './env';
-import { register } from './http/controllers/register';
-import { prisma } from './lib/prisma';
+import { register } from './modules/http/controllers/register';
 
 export const app = fastify();
 

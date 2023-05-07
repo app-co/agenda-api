@@ -1,4 +1,4 @@
-import { IUsersRepository } from '@/repositories/IUser-repository';
+import { IUsersRepository } from '@/modules/repositories/IUser-repository';
 import { User } from '@prisma/client';
 import { compare } from 'bcryptjs';
 

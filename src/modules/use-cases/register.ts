@@ -1,7 +1,8 @@
-import { IUsersRepository } from '@/repositories/IUser-repository';
-import { UserAlredyExist } from '@/use-cases/errors/user-alredy-existes-error';
+import { IUsersRepository } from '@/modules/repositories/IUser-repository';
 import { User } from '@prisma/client';
 import { hash } from 'bcryptjs';
+
+import { UserAlredyExist } from './errors/user-alredy-existes-error';
 
 interface IProsp {
   nome: string;

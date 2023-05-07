@@ -1,6 +1,6 @@
 /* eslint-disable import/no-extraneous-dependencies */
-import { InMemoryUser } from '@/repositories/in-memory-user';
-import { PrismaUserRepository } from '@/repositories/prisma-users-repository';
+import { InMemoryUser } from '@/modules/repositories/in-memory-user';
+import { PrismaUserRepository } from '@/modules/repositories/prisma-users-repository';
 import { compare } from 'bcryptjs';
 import { describe, expect, test, it } from 'vitest';
 

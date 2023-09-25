@@ -9,6 +9,7 @@
     "test": "vitest run",
     "tw": "vitest",
     "test:cover": "vitest run --caverage",
+    "cc": "yarn plop --plopfile ./generators/plopfile.cjs",
     "md": "prisma migrate dev"
   },
   "keywords": [],
@@ -41,8 +42,14 @@
   "dependencies": {
     "@prisma/client": "4.13.0",
     "bcryptjs": "2.4.3",
+    "date-fns": "2.30.0",
+    "dayjs": "1.11.9",
     "dotenv": "16.0.3",
     "fastify": "4.17.0",
+    "highcharts": "11.1.0",
+    "plop": "3.1.2",
+    "react-native-highcharts": "1.0.2",
+    "react-native-svg": "13.13.0",
     "zod": "3.21.4"
   }
 }

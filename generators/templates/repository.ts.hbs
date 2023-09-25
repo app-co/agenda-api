@@ -1,0 +1,27 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
+import { {{model}}, Prisma } from '@prisma/client';
+import { prisma } from 'utils/prisma';
+
+
+import { I{{model}}Repository } from '../IRepository/I{{model}}Repository';
+
+export class {{model}}PrismaRepository implements I{{model}}Repository {
+  public async create(data: Prisma.{{model}}CreateInput): Promise<{{model}}> {
+    const create = await prisma.{{vm}}.create({data})
+
+    return create
+  }
+
+  public async findById(id: string): Promise<{{model}} | null> {
+      const list = await prisma.{{vm}}.findUnique({ where: { id } });
+    
+      return list;
+  }
+
+  public async listMany(): Promise<{{model}}[]> {
+    const list = await prisma.{{vm}}.findMany()
+
+    return list
+
+  }
+}

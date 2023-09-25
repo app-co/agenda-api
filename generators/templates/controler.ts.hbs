@@ -1,0 +1,35 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
+import { Request, Response } from 'express';
+import { {{service}} } from '@modules/End/services/{{service}}';
+import { container } from 'tsyringe';
+
+
+export class {{model}}Controller {
+  async create(req: Request, res: Response): Promise<Response> {
+    const service = container.resolve({{service}});
+
+    const {} = req.body;
+
+    const create = await service.create({});
+
+    return res.json(create);
+  }
+
+
+  async listMany(req: Request, res: Response): Promise<Response> {
+    const service = container.resolve({{service}});
+
+    const list = await service.listMany();
+
+    return res.json(list);
+  }
+
+    async findById(req: Request, res: Response): Promise<Response> {
+    const service = container.resolve({{service}});
+    const id = req.params
+
+    const list = await service.findById({id: String(id)});
+
+    return res.json(list);
+  }
+}

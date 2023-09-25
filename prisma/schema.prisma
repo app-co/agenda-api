@@ -10,168 +10,135 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model TB_ATIVOS {
-  ID_ATIVOS        String   @id @default(uuid())
-  DS_ESTADO        String
-  NR_ESTADO        Int
-  ID_USER_INC      String   @default(cuid())
-  DT_INCLUSAO      DateTime @default(now())
-  ID_USUARIO       String   @default(cuid())
-  DT_ULT_ALTERACAO DateTime @default(now()) @updatedAt
-  ID_USER_ULT_ALT  String   @unique
-
-  @@map("tb_ativos")
+model Client {
+  id          String        @id @default(uuid())
+  name        String
+  password    String
+  email       String        @unique
+  avatar      String?
+  cell        String
+  created_at  DateTime      @default(now())
+  updated_at  DateTime      @updatedAt
+  providerId  String?
+  appointment Appointment[]
 }
 
-model TB_EXECUTIVO {
-  ID_EXECUTIVO     String   @id @default(uuid())
-  NR_CPF           String   @unique
-  NR_CNPJ          String   @unique
-  DS_ESTADO        String
-  TP_ATIVO         String
-  DS_USUARIO       String
-  DS_SENHA         String
-  VL_RECEITA       Int
-  DT_INCLUSAO      DateTime @default(now())
-  ID_USUARIO       String
-  DT_ULT_ALTERACAO DateTime @default(now()) @updatedAt
-  ID_USER_ULT_ALT  String
+model Provider {
+  id           String  @id @default(uuid())
+  name         String
+  password     String
+  email        String  @unique
+  avatar       String?
+  cell         String
+  cnpj         String  @unique
+  cpf          String  @unique
+  city         String
+  locality     String
+  home_number  String
+  postal_code  String
+  region_code  String
+  razao_social String  @unique
+
+  created_at  DateTime      @default(now())
+  updated_at  DateTime      @updatedAt
+  appointment Appointment[]
+  workhour    Workhour?
+  Vocation    Vocation[]
+  Service     Service[]
 }
 
-model TB_REVENDA {
-  ID_REVENDA       String   @id @default(uuid())
-  ID_UPLINE_NV1    String
-  ID_UPLINE_NV2    String
-  ID_UPLINE_NV3    String
-  ID_ENDERECO      String
-  NV_DOWNLINE      String
-  DS_CARGO         String
-  DS_NOME          String
-  NR_CNPJ          String   @unique
-  NR_CPF           String   @unique
-  DS_ATIVO         String
-  NR_MES_NIVER     Int
-  NR_DIA_NIVER     Int
-  DT_NASCIMENTO    String
-  TP_SEXO          String
-  TP_PESSOA        String
-  TP_SIT_JURIDICA  String
-  DS_INSTAGRAM     String
-  DS_FACEBOOK      String
-  DS_LINKEDIN      String
-  DS_EMAIL         String
-  NR_DDD_CEL       String
-  NR_CELULAR       String
-  NR_ENDERECO      String
-  DS_COMPLEMENTO   String
-  IMG_FOTO         String
-  VL_MEDIO         Int
-  DT_INCLUSAO      DateTime @default(now())
-  ID_USUARIO       String
-  DT_ULT_ALTERACAO DateTime @default(now()) @updatedAt
-  ID_USER_ULT_ALT  String
+enum EAppointment {
+  pendente
+  realizado
+  nao_realizado
 }
 
-model TB_CLIENTE {
-  ID_CLIENTE             String    @id @default(uuid())
-  ID_REVENDA             Int
-  ID_ENDERECO            Int
-  NR_CARTEIRA            Int
-  VL_CARTEIRA            Int
-  DS_FANTASIA            String
-  DS_CLIENTE             String
-  NR_CNPJ                String    @unique
-  NR_CPF                 String    @unique
-  NR_RG                  String    @unique
-  NR_MES_NIVER           Int
-  NR_DIA_NIVER           Int
-  DT_NASCIMENTO          DateTime
-  DS_EMAIL               String
-  NR_DDD_CEL             String
-  NR_CELULAR             String
-  NR_DDD_TEL             String
-  NR_TELEFONE            String
-  CD_MUNICIPIO           String
-  DS_COMPLEMENTO         String
-  DS_LOGRADOURO          String
-  DS_BAIRRO              String
-  DS_CIDADE              String
-  DS_UF                  String
-  NR_ENDERECO            String
-  NR_CEP                 String
-  DT_CADASTRO            DateTime  @default(now())
-  DT_CONTRATO            DateTime?
-  DT_RECISAO             DateTime?
-  ID_MOTIVO              Int
-  VL_CONTRATO            Int
-  VL_MENSAL              Int
-  TP_ATIVO               String
-  TP_SEXO                String
-  TP_PESSOA              String
-  TP_REGIME              String
-  NR_INSC_ESTADUAL_SUBST String
-  NR_INSC_ESTADUAL       String
-  NR_INSC_MUNICIPAL      String
-  DS_SUFRAMA             String
-  DT_INCLUSAO            String
-  ID_USUARIO             String
-  DT_ULT_ALTERACAO       DateTime  @default(now()) @updatedAt
-  ID_USER_ULT_ALT        String
+model Appointment {
+  id             String       @id @default(uuid())
+  start          DateTime
+  end            DateTime
+  fk_client_id   String?
+  fk_provider_id String
+  service        String
+  client_name    String
+  status         EAppointment
+
+  provider   Provider? @relation(fields: [fk_provider_id], references: [id])
+  client     Client?   @relation(fields: [fk_client_id], references: [id])
+  created_at DateTime  @default(now())
+  updated_at DateTime  @updatedAt
+  Order      Order?
 }
 
-model TB_MOTIVO {
-  ID_MOTIVO        String   @id @default(uuid())
-  DS_MOTIVO        String
-  DT_INCLUSAO      DateTime @default(now())
-  ID_USUARIO       String
-  DT_ULT_ALTERACAO DateTime @default(now()) @updatedAt
-  ID_USER_ULT_ALT  String
+model Service {
+  id          String  @id @default(uuid())
+  name        String
+  description String
+  amount      Int
+  duration    Int
+  image       String?
+
+  fk_provider_id String
+  provider       Provider @relation(fields: [fk_provider_id], references: [id])
+
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
 }
 
-model TB_COMISSAO {
-  ID_COMISSAO      String   @id @default(uuid())
-  TP_COMISSAO      String
-  TP_UPLINE        String
-  NV_UPLINE        String
-  VL_MEDIO         Int
-  VL_COMISSAO      Int
-  NR_CARTEIRA      Int
-  DT_INCLUSAO      DateTime @default(now())
-  ID_USUARIO       String
-  DT_ULT_ALTERACAO DateTime @default(now()) @updatedAt
-  ID_USER_ULT_ALT  String
+model Workhour {
+  id             String   @id @default(uuid())
+  from           Int
+  at             Int
+  week           Json[]
+  provider       Provider @relation(fields: [fk_provider_id], references: [id])
+  fk_provider_id String   @unique
+
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
 }
 
-model TB_TREINAMENTO {
-  ID_TREINAMENTO   String   @id @default(uuid())
-  DS_TREINAMENTO   String
-  DS_IMAGEM        String
-  VL_AVALIADO      Int
-  VL_CURSO         Int
-  DT_INCLUSAO      DateTime @default(now())
-  ID_USUARIO       String
-  DT_ULT_ALTERACAO DateTime @default(now()) @updatedAt
-  ID_USER_ULT_ALT  String
+enum VocationType {
+  MENSAL
+  DIARIA
+  SEMANAL
 }
 
-model TB_PRECO {
-  ID_PRECO         String   @id @default(uuid())
-  DS_SERVICO       String
-  VL_SERVICO       Int
-  DT_INCLUSAO      DateTime @default(now())
-  ID_USUARIO       String
-  DT_ULT_ALTERACAO DateTime @default(now()) @updatedAt
-  ID_USER_ULT_ALT  String
+model Vocation {
+  id             String       @id @default(uuid())
+  type           VocationType
+  start          DateTime
+  end            DateTime
+  weekend        Json[]
+  fk_provider_id String
+  provider       Provider     @relation(fields: [fk_provider_id], references: [id])
+
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
 }
 
-model TB_RECEITA {
-  ID_RECEITA       String   @id @default(uuid())
-  NR_ANO           String
-  DS_MES           String
-  VL_MES           Int
-  VL_META          Int
-  DT_INCLUSAO      DateTime @default(now())
-  ID_USUARIO       String
-  DT_ULT_ALTERACAO DateTime @default(now()) @updatedAt
-  ID_USER_ULT_ALT  String
+enum ETypePayment {
+  CREDIT_CARD
+  PIX
+  MONEY
+}
+
+enum EEstatus {
+  PENDING
+  RECEIVED
+  CONFIRMED
+  OVERDUE
+  REFUNDED
+}
+
+model Order {
+  id           String       @id @default(uuid())
+  payment_type ETypePayment @default(MONEY)
+  status       EEstatus
+  amount       Int
+
+  apointment    Appointment @relation(fields: [appointmentId], references: [id])
+  appointmentId String      @unique
+
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
 }

@@ -1,0 +1,7 @@
+import {  Prisma, {{model}} } from '@prisma/client';
+
+export interface I{{model}}Repository {
+  create(data: Prisma.{{model}}CreateInput): Promise<{{model}}>;
+  findById(id: string): Promise<{{model}} | null>
+  listMany(): Promise<{{model}}[]>
+}

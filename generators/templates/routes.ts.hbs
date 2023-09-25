@@ -1,0 +1,14 @@
+import { Router } from 'express';
+
+import { {{model}}Controller } from '../controller/{{model}}Controller';
+
+const {{vm}} = Router();
+const control = new {{model}}Controller();
+
+
+{{vm}}.post('/create-{{vm}}', control.create);
+{{vm}}.get('/:id/',  control.findById);
+{{vm}}.get('/',  control.listMany)
+
+
+export { {{vm}} };

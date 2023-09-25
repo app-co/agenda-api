@@ -1,18 +1,22 @@
+/* eslint-disable no-underscore-dangle */
 import fastify from 'fastify';
 import { ZodError, z } from 'zod';
 
 import { env } from './env';
-import { register } from './modules/http/controllers/register';
+import { Routes } from './shared/routes/routes';
 
 export const app = fastify();
 
-app.post('/users', register);
+app.register(Routes);
 
 app.setErrorHandler((error, request, reply) => {
   if (error instanceof ZodError) {
+    const key = error.issues[0].path[0];
+    const mess = error.issues[0].message;
+
     return reply
       .status(400)
-      .send({ message: 'Validation error', issues: error.format() });
+      .send({ message: `Validation error: ${key}, ${mess}` });
   }
 
   if (env.NODE_ENV !== 'production') {
